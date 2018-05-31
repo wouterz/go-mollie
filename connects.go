@@ -24,8 +24,9 @@ func newConnects(clientID, clientSecret, redirectURL string, scopes ...string) *
 
 }
 
-func (c *ConnectAPI) Authorize(csrf string, opts ...oauth2.AuthCodeOption) string {
-	return c.AuthCodeURL("csrfString", oauth2.ApprovalForce)
+func (c *ConnectAPI) Authorize(opts ...oauth2.AuthCodeOption) string {
+	csrfString := "toBeGenerated"
+	return c.AuthCodeURL(csrfString, opts...)
 }
 
 func (c *ConnectAPI) Tokens(code string) (*oauth2.Token, error) {
