@@ -22,16 +22,17 @@ func Get(apikey string) Mollie {
 	c := core{apiKey: apikey}
 
 	return Mollie{
-		issuers:   newIssuers(&c)
+		issuers:   newIssuers(&c),
 		methods:   newMethods(&c),
 		payments:  newPayments(&c),
-		customers: newCustomers(&c)
+		customers: newCustomers(&c),
 	}
 }
 
-func GetOauth(clientID, clientSecret, redirect string, scopes ...string) {
+// Get the Oauth API of mollie
+func GetOauth(clientID, clientSecret, redirect string, scopes ...string) OauthMollie {
 	return OauthMollie{
-		connects: newConnects(clientID, clientSecret, redirect, scopes),
+		connects: newConnects(clientID, clientSecret, redirect, scopes...),
 	}
 }
 
@@ -56,6 +57,6 @@ func (m Mollie) Customers() *CustomerAPI {
 }
 
 // Connects returns a reference to the ConnectAPI
-func (m Mollie) Connects() *ConnectAPI {
+func (m OauthMollie) Connects() *ConnectAPI {
 	return m.connects
 }

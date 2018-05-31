@@ -9,7 +9,7 @@ type ConnectAPI struct {
 }
 
 func newConnects(clientID, clientSecret, redirectURL string, scopes ...string) *ConnectAPI {
-	return ConnectAPI{
+	return &ConnectAPI{
 		&oauth2.Config{
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
