@@ -24,7 +24,7 @@ func newConnects(clientID, clientSecret, redirectURL string, scopes ...string) *
 
 }
 
-func (c *ConnectAPI) Authorize() string {
+func (c *ConnectAPI) Authorize(csrf string, opts ...oauth2.AuthCodeOption) string {
 	return c.AuthCodeURL("csrfString", oauth2.ApprovalForce)
 }
 
