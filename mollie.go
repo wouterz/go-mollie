@@ -13,15 +13,25 @@ type Mollie struct {
 	customers *CustomerAPI
 }
 
+type OauthMollie struct {
+	connects *ConnectAPI
+}
+
 // Get generates a new API structure with the provided API-Key
 func Get(apikey string) Mollie {
 	c := core{apiKey: apikey}
 
 	return Mollie{
-		issuers:   newIssuers(&c),
+		issuers:   newIssuers(&c)
 		methods:   newMethods(&c),
 		payments:  newPayments(&c),
-		customers: newCustomers(&c),
+		customers: newCustomers(&c)
+	}
+}
+
+func GetOauth(clientID, clientSecret, redirect string, scopes ...string) {
+	return OauthMollie{
+		connects: newConnects(clientID, clientSecret, redirect, scopes),
 	}
 }
 
@@ -43,4 +53,9 @@ func (m Mollie) Payments() *PaymentAPI {
 // Customers returns a reference to the CustomerAPI
 func (m Mollie) Customers() *CustomerAPI {
 	return m.customers
+}
+
+// Connects returns a reference to the ConnectAPI
+func (m Mollie) Connects() *ConnectAPI {
+	return m.connects
 }
